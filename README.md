@@ -26,3 +26,6 @@ Planned Architectures:
 - [ ] AArch64
 - [ ] RISC-V
 - [ ] WASM
+
+## License
+See [**LICENSE**](https://github.com/ryaangu/fixe/blob/main/LICENSE) for details.
