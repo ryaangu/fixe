@@ -1,4 +1,6 @@
-# What is FIXE?
+
+
+## What is FIXE?
 **FIXE** is a platform-independent instruction set intended to provide an efficient, portable native backend to compiler projects.
 
 ```llvm
@@ -10,10 +12,10 @@ main:
     syscall %1, exit(i32 1)
 ```
 
-# Installation
+## Installation
 TODO
 
-# Supported Platforms
+## Supported Platforms
 Operating Systems:
 - [x] Linux
 - [ ] Windows
