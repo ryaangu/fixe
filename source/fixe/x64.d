@@ -6,23 +6,23 @@ struct X64Register
     uint size;
 }
 
-__gshared const X64Register g_eax = { 0, 4 };
-__gshared const X64Register g_ecx = { 1, 4 };
-__gshared const X64Register g_edx = { 2, 4 };
-__gshared const X64Register g_ebx = { 3, 4 };
-__gshared const X64Register g_esp = { 4, 4 };
-__gshared const X64Register g_ebp = { 5, 4 };
-__gshared const X64Register g_esi = { 6, 4 };
-__gshared const X64Register g_edi = { 7, 4 };
+__gshared const(X64Register) g_eax = { 0, 4 };
+__gshared const(X64Register) g_ecx = { 1, 4 };
+__gshared const(X64Register) g_edx = { 2, 4 };
+__gshared const(X64Register) g_ebx = { 3, 4 };
+__gshared const(X64Register) g_esp = { 4, 4 };
+__gshared const(X64Register) g_ebp = { 5, 4 };
+__gshared const(X64Register) g_esi = { 6, 4 };
+__gshared const(X64Register) g_edi = { 7, 4 };
 
-__gshared const X64Register g_rax = { 0, 8 };
-__gshared const X64Register g_rcx = { 1, 8 };
-__gshared const X64Register g_rdx = { 2, 8 };
-__gshared const X64Register g_rbx = { 3, 8 };
-__gshared const X64Register g_rsp = { 4, 8 };
-__gshared const X64Register g_rbp = { 5, 8 };
-__gshared const X64Register g_rsi = { 6, 8 };
-__gshared const X64Register g_rdi = { 7, 8 };
+__gshared const(X64Register) g_rax = { 0, 8 };
+__gshared const(X64Register) g_rcx = { 1, 8 };
+__gshared const(X64Register) g_rdx = { 2, 8 };
+__gshared const(X64Register) g_rbx = { 3, 8 };
+__gshared const(X64Register) g_rsp = { 4, 8 };
+__gshared const(X64Register) g_rbp = { 5, 8 };
+__gshared const(X64Register) g_rsi = { 6, 8 };
+__gshared const(X64Register) g_rdi = { 7, 8 };
 
 struct X64Assembler
 {
