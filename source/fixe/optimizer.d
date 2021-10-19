@@ -156,9 +156,6 @@ struct FXOptimizer
                     active                ~= i;
                 }
             }
-
-
-            writeln(block.ranges);
         }
     }
 
