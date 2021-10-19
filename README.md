@@ -1,7 +1,7 @@
 
 
 ## What is FIXE?
-**FIXE** is a platform-independent instruction set intended to provide an efficient, portable native backend to compiler projects.
+**FIXE** is a platform-independent instruction set intended to provide an efficient, portable backend to compiler projects.
 
 ```llvm
 message: [u8 x 2] "hi"
