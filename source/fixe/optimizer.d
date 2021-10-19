@@ -10,7 +10,7 @@ private struct Block
     ulong start;
     ulong end;
 
-    LiveRange[] ranges;
+    LiveRange[ulong] ranges;
 }
 
 private struct LiveRange
@@ -41,10 +41,11 @@ struct FXOptimizer
 
     private Register[] x64_registers =
     [
-        Register(0, true),
-        Register(1, true),
-        Register(2, true),
-        Register(3, true),
+        Register(0, false),
+        Register(1, false),
+        Register(2, false),
+        Register(3, false),
+        Register(4, false),
     ];
 
     void start(FXObject *_object)
@@ -80,9 +81,6 @@ struct FXOptimizer
 
     private void compute_ranges()
     {
-        LiveRange range;
-        range.start = -1;
-
         foreach (index, ref block; blocks)
         {
             for (ulong i = block.start; i < block.end; ++i)
@@ -93,20 +91,10 @@ struct FXOptimizer
                 {
                     if (param.type == fx_value_register)
                     {
-                        if (range.start == -1)
-                        {
-                            range.start    = i;
-                            range.end      = i;
-                            range.register = param.as_register;
-                        }
-
-                        if (instruction.type == fx_op_syscall)
-                        {
-                            block.ranges ~= range;
-                            range.start           = -1;
-                        }
+                        if (!(param.as_register in block.ranges))
+                            block.ranges[param.as_register] = LiveRange(i, i, param.as_register, 0, 0);
                         else
-                            ++range.end;
+                            block.ranges[param.as_register].end = i;
                     }
                 }
             }
@@ -120,7 +108,7 @@ struct FXOptimizer
             if (!register.used)
             {
                 register.used = true;
-                return &x64_registers[i];
+                return &register;
             }
         }
 
@@ -139,7 +127,7 @@ struct FXOptimizer
         }
     }
 
-    private LiveRange *find_range(ulong register, ref LiveRange[] ranges)
+    private LiveRange *find_range(ulong register, ref LiveRange[ulong] ranges)
     {
         foreach (ref range; ranges)
         {
@@ -168,10 +156,13 @@ struct FXOptimizer
                     active                ~= i;
                 }
             }
+
+
+            writeln(block.ranges);
         }
     }
 
-    private void expire_old_ranges(ref LiveRange range, ref LiveRange[] ranges)
+    private void expire_old_ranges(ref LiveRange range, ref LiveRange[ulong] ranges)
     {
         foreach(i, range_id; active)
         {
@@ -188,7 +179,7 @@ struct FXOptimizer
         }
     }
 
-    private void spill_at_range(ref LiveRange range, ulong i, ref LiveRange[] ranges)
+    private void spill_at_range(ref LiveRange range, ulong i, ref LiveRange[ulong] ranges)
     {
         long index = ((active.length > 0) ? active[$ - 1] : -1);
 
