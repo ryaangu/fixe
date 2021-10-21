@@ -1,14 +1,20 @@
-module fixe.instruction;
+module fixe.backend.instruction;
 
-import fixe.value;
+import fixe.backend.value;
 
 enum FXInstructionType
 {
+    copy,
+    ret,
+
     syscall,
 }
 
 __gshared string[] fxInstructionNames = 
 [
+    "copy",
+    "ret",
+    
     "syscall",
 ];
 

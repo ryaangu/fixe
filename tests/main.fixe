@@ -1,0 +1,3 @@
+main:
+    syscall r0, i32 60, i32 0
+    ret void

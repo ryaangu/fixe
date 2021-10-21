@@ -1,1 +1,1 @@
-gdc source/*/*.d tests/main.d -o out/fixe
+gdc source/fixe/*/*.d tests/main.d -o out/fixe
