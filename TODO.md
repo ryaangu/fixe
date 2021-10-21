@@ -1,1 +1,2 @@
 - [ ] Remove D standard library.
+- [ ] Try to get the executable to be the smallest possible.
