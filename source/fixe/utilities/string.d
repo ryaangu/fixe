@@ -1,9 +1,9 @@
 module fixe.utilities.string;
 
 /// Get the length of a C-string
-ulong string_length(const(char) *string_)
+ulong stringLength(const(char)* string_)
 {
-    const(char) *base = string_;
+    const(char)* base = string_;
 
     while (*string_++)
     {
@@ -14,10 +14,10 @@ ulong string_length(const(char) *string_)
 }
 
 /// Compare if both C-strings are equals
-bool string_equals(const(char) *a, const(char) *b, ulong length = 0)
+bool stringEquals(const(char)* a, const(char)* b, ulong length = 0)
 {
-    ulong a_length = string_length(a);
-    ulong b_length = string_length(b);    
+    ulong a_length = stringLength(a);
+    ulong b_length = stringLength(b);    
 
     if (length == 0)
     {

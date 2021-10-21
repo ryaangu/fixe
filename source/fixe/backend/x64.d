@@ -38,7 +38,7 @@ struct X64Assembler
     }
 
     // XOR
-    void xor(const ref X64Register a, const ref X64Register b)
+    void xor(ref const(X64Register) a, ref const(X64Register) b)
     {
         if (a.size == 8)
             code ~= 0x48;
@@ -48,7 +48,7 @@ struct X64Assembler
     }
 
     // MOV
-    void mov(const ref X64Register register, int value)
+    void mov(ref const(X64Register) register, int value)
     {
         code ~= cast(ubyte)(0xB8 + register.index);
         write32(value);

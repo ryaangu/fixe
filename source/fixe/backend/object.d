@@ -10,7 +10,7 @@ struct FXObject
 {
     FXInstruction[] instructions;
 
-    private FXInstruction *make_instruction(uint type)
+    private FXInstruction* make_instruction(uint type)
     {
         FXInstruction instruction;
         instruction.type = type;
