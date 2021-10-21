@@ -1,38 +1,19 @@
 module fixe.object;
 
-public import fixe.ir;
-public import fixe.dump;
-       import fixe.x64;
-       import fixe.optimizer;
+import fixe.instruction;
+import fixe.value;
+import fixe.dump;
 
 struct FXObject
 {
     FXInstruction[] instructions;
 
-    private FXOptimizer optimizer;
-    
-    void frame()
-    {
-        FXInstruction instruction;
-
-        instruction.type  = fx_op_frame;
-        instructions     ~= instruction;
-    }
-
-    void frame_end()
-    {
-        FXInstruction instruction;
-
-        instruction.type  = fx_op_frame_end;
-        instructions     ~= instruction;
-    }
-
     void syscall(T...)(T params)
     {
         FXInstruction instruction;
-        instruction.type = fx_op_syscall;
+        instruction.type = FXInstructionType.syscall;
         
-        foreach (param; params)
+        foreach (ref FXValue param; params)
             instruction.params ~= param;
 
         instructions ~= instruction;
@@ -40,6 +21,11 @@ struct FXObject
 
     void compile()
     {
-        optimizer.start(&this);
+
+    }
+
+    void dump()
+    {
+        dumpObject(this);
     }
 }

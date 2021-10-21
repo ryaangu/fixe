@@ -1,49 +1,23 @@
 module fixe.dump;
 
 import fixe.object;
+import fixe.instruction;
+import fixe.value;
+
 import std.stdio;
 
-private void dump(ref FXValue param)
+private void dumpInstruction(ref FXInstruction instruction)
 {
-    write(fx_value_names[param.type], " ");
+    write("    ", fxInstructionNames[instruction.type], " ");
 
-    switch (param.type)
-    {
-        case fx_value_i32:
-        {
-            write(param.as_i32);
-            break;
-        }
+    foreach (ref FXValue param; instruction.params)
+        write(fxTypeNames[param.type], " ", param.value, " ");
 
-        case fx_value_register:
-        {
-            write(param.as_register);
-            break;
-        }
-
-        default:
-            break;
-    }
-
-    write(" ");
+    writeln();
 }
 
-private void dump(ref FXInstruction instruction)
+void dumpObject(ref FXObject object)
 {
-    write(fx_op_names[instruction.type], " ");
-
-    foreach (param; instruction.params)
-        dump(param);
-}
-
-void dump(ref FXObject object)
-{
-    writeln("FIXE input:");
-
-    foreach (instruction; object.instructions)
-    {
-        write("    ");
-        dump(instruction);
-        writeln();
-    }
+    foreach (ref FXInstruction instruction; object.instructions)
+        dumpInstruction(instruction);
 }

@@ -6,30 +6,30 @@ struct X64Register
     uint size;
 }
 
-__gshared const(X64Register) g_eax = { 0, 4 };
-__gshared const(X64Register) g_ecx = { 1, 4 };
-__gshared const(X64Register) g_edx = { 2, 4 };
-__gshared const(X64Register) g_ebx = { 3, 4 };
-__gshared const(X64Register) g_esp = { 4, 4 };
-__gshared const(X64Register) g_ebp = { 5, 4 };
-__gshared const(X64Register) g_esi = { 6, 4 };
-__gshared const(X64Register) g_edi = { 7, 4 };
+__gshared const(X64Register) gEax = { 0, 4 };
+__gshared const(X64Register) gEcx = { 1, 4 };
+__gshared const(X64Register) gEdx = { 2, 4 };
+__gshared const(X64Register) gEbx = { 3, 4 };
+__gshared const(X64Register) gEsp = { 4, 4 };
+__gshared const(X64Register) gEbp = { 5, 4 };
+__gshared const(X64Register) gEsi = { 6, 4 };
+__gshared const(X64Register) gEdi = { 7, 4 };
 
-__gshared const(X64Register) g_rax = { 0, 8 };
-__gshared const(X64Register) g_rcx = { 1, 8 };
-__gshared const(X64Register) g_rdx = { 2, 8 };
-__gshared const(X64Register) g_rbx = { 3, 8 };
-__gshared const(X64Register) g_rsp = { 4, 8 };
-__gshared const(X64Register) g_rbp = { 5, 8 };
-__gshared const(X64Register) g_rsi = { 6, 8 };
-__gshared const(X64Register) g_rdi = { 7, 8 };
+__gshared const(X64Register) gRax = { 0, 8 };
+__gshared const(X64Register) gRcx = { 1, 8 };
+__gshared const(X64Register) gRdx = { 2, 8 };
+__gshared const(X64Register) gRbx = { 3, 8 };
+__gshared const(X64Register) gRsp = { 4, 8 };
+__gshared const(X64Register) gRbp = { 5, 8 };
+__gshared const(X64Register) gRsi = { 6, 8 };
+__gshared const(X64Register) gRdi = { 7, 8 };
 
 struct X64Assembler
 {
     ubyte[] code;
 
     // Write bytes to code
-    private void write_32(int value)
+    private void write32(int value)
     {
         ubyte *bytes = cast(ubyte *)(&value);
 
@@ -51,7 +51,7 @@ struct X64Assembler
     void mov(const ref X64Register register, int value)
     {
         code ~= cast(ubyte)(0xB8 + register.index);
-        write_32(value);
+        write32(value);
     }
 
     // SYSCALL

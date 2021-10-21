@@ -1,173 +1,91 @@
 module fixe.value;
 
-enum
+enum FXType
 {
-    fx_value_void,
-    fx_value_u8,
-    fx_value_u16,
-    fx_value_u32,
-    fx_value_u64,
-    fx_value_i8,
-    fx_value_i16,
-    fx_value_i32,
-    fx_value_i64,
-    fx_value_f32,
-    fx_value_f64,
-    fx_value_pointer,
-    fx_value_address,
-    fx_value_array,
-    fx_value_register,
+    void_,
+    bool_,
+
+    int8,
+    int16,
+    int32,
+    int64,
+
+    float32,
+    float64,
+
+    pointer,
+    register,
 }
 
-string[] fx_value_names = 
+__gshared string[] fxTypeNames = 
 [
     "void",
-    "u8",
-    "u16",
-    "u32",
-    "u64",
+    "bool",
+
     "i8",
     "i16",
     "i32",
     "i64",
+
     "f32",
     "f64",
-    "pointer",
-    "address",
-    "array",
-    "register",
+
+    "ptr",
+    "reg",
 ];
-
-struct FXAddress
-{
-    ulong register;
-    long  offset;
-}
-
-struct FXValueArray 
-{
-    uint type;
-    uint length;
-}
 
 struct FXValue
 {
-    union
-    {
-        ubyte        as_u8;
-        ushort       as_u16;
-        uint         as_u32;
-        ulong        as_u64;
-        byte         as_i8;
-        short        as_i16;
-        int          as_i32;
-        long         as_i64;
-        float        as_f32;
-        double       as_f64;
-        long         as_pointer;
-        FXAddress    as_address;
-        FXValueArray as_array;
-        ulong        as_register;
-    }
-
+    double value;
     uint type;
 }
 
-FXValue fx_void()
+FXValue fxVoid()
 {
-    FXValue fx_value;
-
-    fx_value.type = fx_value_void;
-
-    return fx_value;
+    return FXValue(0, FXType.void_);
 }
 
-FXValue fx_u8(ubyte value)
+FXValue fxBool(bool value)
 {
-    FXValue fx_value;
-
-    fx_value.type  = fx_value_u8;
-    fx_value.as_u8 = value;
-
-    return fx_value;
+    return FXValue(cast(double)value, FXType.bool_);
 }
 
-FXValue fx_u16(ushort value)
+FXValue fxI8(byte value)
 {
-    FXValue fx_value;
-
-    fx_value.type   = fx_value_u16;
-    fx_value.as_u16 = value;
-
-    return fx_value;
+    return FXValue(cast(double)value, FXType.int8);
 }
 
-FXValue fx_u32(uint value)
+FXValue fxI16(short value)
 {
-    FXValue fx_value;
-
-    fx_value.type   = fx_value_u32;
-    fx_value.as_u32 = value;
-
-    return fx_value;
+    return FXValue(cast(double)value, FXType.int16);
 }
 
-FXValue fx_u64(ulong value)
+FXValue fxI32(int value)
 {
-    FXValue fx_value;
-
-    fx_value.type   = fx_value_u64;
-    fx_value.as_u64 = value;
-
-    return fx_value;
+    return FXValue(cast(double)value, FXType.int32);
 }
 
-FXValue fx_i8(byte value)
+FXValue fxI64(long value)
 {
-    FXValue fx_value;
-
-    fx_value.type  = fx_value_i8;
-    fx_value.as_i8 = value;
-
-    return fx_value;
+    return FXValue(cast(double)value, FXType.int64);
 }
 
-FXValue fx_i16(short value)
+FXValue fxF32(float value)
 {
-    FXValue fx_value;
-
-    fx_value.type   = fx_value_i16;
-    fx_value.as_i16 = value;
-
-    return fx_value;
+    return FXValue(cast(double)value, FXType.float32);
 }
 
-FXValue fx_i32(int value)
+FXValue fxF64(double value)
 {
-    FXValue fx_value;
-
-    fx_value.type   = fx_value_i32;
-    fx_value.as_i32 = value;
-
-    return fx_value;
+    return FXValue(value, FXType.float64);
 }
 
-FXValue fx_i64(long value)
+FXValue fxPtr(ulong value)
 {
-    FXValue fx_value;
-
-    fx_value.type   = fx_value_i64;
-    fx_value.as_i64 = value;
-
-    return fx_value;
+    return FXValue(cast(double)value, FXType.pointer);
 }
 
-FXValue fx_register(ulong value)
+FXValue fxReg(ulong value)
 {
-    FXValue fx_value;
-
-    fx_value.type        = fx_value_register;
-    fx_value.as_register = value;
-
-    return fx_value;
+    return FXValue(cast(double)value, FXType.register);
 }
