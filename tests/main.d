@@ -12,10 +12,10 @@ void main()
     FXTarget target = FXTarget(FXBackendType.c, FXOSType.linux);
 
     obj.label("main");
-    obj.label(".end");
-    obj.ret(fxVoid);
-    obj.label("test");
-    obj.ret(fxVoid);
+    obj.label(".success");
+    obj.ret(fxBool(false));
+    obj.label(".failure");
+    obj.ret(fxBool(true));
 
-    obj.compile(target, "tests/out/test.c");
+    obj.compile(target, "tests/output/test.c");
 }

@@ -82,7 +82,7 @@ private void writeFunctionDeclaration(ref FXInstruction instruction)
     if (instruction.params[0].label != "main")
         writeOutput("void _", instruction.params[0].label, "()\n{\n");
     else
-        writeOutput("void main()\n{\n");
+        writeOutput("int main()\n{\n");
 }
 
 private void writeLabel(ref FXInstruction instruction)
@@ -105,7 +105,7 @@ void convertIRToC(string path, ref FXObject object)
     if (object.labels.length == 0)
     {
         hadLabel = true;
-        writeOutput("void main()\n{\n");
+        writeOutput("int main()\n{\n");
     }
 
     foreach (ref FXInstruction instruction; object.instructions)
