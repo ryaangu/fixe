@@ -17,7 +17,7 @@ enum FXType
     register,
 }
 
-__gshared string[] fxTypeNames = 
+__gshared string[10] fxTypeNames = 
 [
     "void",
     "bool",

@@ -10,7 +10,7 @@ enum FXInstructionType
     syscall,
 }
 
-__gshared string[] fxInstructionNames = 
+__gshared string[3] fxInstructionNames = 
 [
     "copy",
     "ret",
