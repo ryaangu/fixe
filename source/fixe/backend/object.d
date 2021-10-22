@@ -3,6 +3,8 @@ module fixe.backend.object;
 import fixe.backend.instruction;
 import fixe.backend.value;
 import fixe.backend.dump;
+import fixe.backend.target;
+import fixe.backend.c;
 
 import std.stdio;
 
@@ -51,9 +53,19 @@ struct FXObject
     }
 
     /// Compile the IR into target machine code
-    void compile()
+    void compile(FXTarget target, string path)
     {
+        switch (target.backend)
+        {
+            case FXBackendType.c:
+            {
+                convertIRToC(path, instructions);
+                break;
+            }
 
+            default:
+                break;
+        }
     }
 
     /// Dump the IR to the console
