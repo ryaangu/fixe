@@ -1,4 +1,4 @@
-module fixe.backend.x64;
+module fixe.utilities.x64;
 
 struct X64Register
 {
