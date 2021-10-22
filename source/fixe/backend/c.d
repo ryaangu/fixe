@@ -79,7 +79,10 @@ private void writeReturnStatement(ref FXInstruction instruction)
 
 private void writeFunctionDeclaration(ref FXInstruction instruction)
 {
-    writeOutput("void ", instruction.params[0].label, "()\n{\n");
+    if (instruction.params[0].label != "main")
+        writeOutput("void _", instruction.params[0].label, "()\n{\n");
+    else
+        writeOutput("void main()\n{\n");
 }
 
 void convertIRToC(string path, ref FXObject object)
