@@ -2,6 +2,7 @@ module fixe.backend.c;
 
 import fixe.backend.instruction;
 import fixe.backend.value;
+import fixe.backend.object;
 
 import std.stdio;
 import std.conv;
@@ -76,7 +77,12 @@ private void writeReturnStatement(ref FXInstruction instruction)
     }
 }
 
-void convertIRToC(string path, ref FXInstruction[] instructions)
+private void writeFunctionDeclaration(ref FXInstruction instruction)
+{
+    writeOutput("void ", instruction.params[0].label, "()\n{\n");
+}
+
+void convertIRToC(string path, ref FXObject object)
 {
     writeGuardStart("FIXE_OUTPUT");
     writeLine();
@@ -86,10 +92,28 @@ void convertIRToC(string path, ref FXInstruction[] instructions)
     writeInclude("stdlib.h");
     writeLine();
 
-    foreach (ref FXInstruction instruction; instructions)
+    bool hadLabel = false;
+
+    if (object.labels.length == 0)
+    {
+        hadLabel = true;
+        writeOutput("void main()\n{\n");
+    }
+
+    foreach (ref FXInstruction instruction; object.instructions)
     {
         switch (instruction.type)
         {
+            case FXInstructionType.label:
+            {
+                if (hadLabel)
+                    writeOutput("}\n\n");
+                
+                hadLabel = true;
+                writeFunctionDeclaration(instruction);
+                break;
+            }
+            
             case FXInstructionType.ret:
             {
                 writeReturnStatement(instruction);
@@ -100,6 +124,9 @@ void convertIRToC(string path, ref FXInstruction[] instructions)
                 break;
         }
     }
+
+    if (hadLabel)
+        writeOutput("}\n");
 
     writeLine();
     writeGuardEnd();

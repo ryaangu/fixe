@@ -15,9 +15,10 @@ enum FXType
 
     pointer,
     register,
+    label,
 }
 
-__gshared string[10] fxTypeNames = 
+__gshared string[11] fxTypeNames = 
 [
     "void",
     "bool",
@@ -32,12 +33,29 @@ __gshared string[10] fxTypeNames =
 
     "ptr",
     "reg",
+    "label",
 ];
 
 struct FXValue
 {
-    double value;
+    union
+    {
+        double value;
+        string label;
+    }
+
     uint type;
+
+    this(double value_, uint type_)
+    {
+        value = value_;
+        type  = type_;
+    }
+
+    this(string name)
+    {
+        label = name;
+    }
 }
 
 /// void
@@ -98,4 +116,10 @@ FXValue fxPtr(ulong value)
 FXValue fxReg(ulong value)
 {
     return FXValue(cast(double)value, FXType.register);
+}
+
+/// label
+FXValue fxLabel(string name)
+{
+    return FXValue(name);
 }

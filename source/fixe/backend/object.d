@@ -8,9 +8,16 @@ import fixe.backend.c;
 
 import std.stdio;
 
+struct FXLabel
+{
+    string name;
+    ulong address;
+}
+
 struct FXObject
 {
     FXInstruction[] instructions;
+    FXLabel[] labels;
 
     private FXInstruction* make_instruction(uint type)
     {
@@ -19,6 +26,15 @@ struct FXObject
 
         instructions ~= instruction;
         return &instructions[$ - 1];
+    }
+
+    /// label name:
+    void label(string name)
+    {
+        FXInstruction *instruction = make_instruction(FXInstructionType.label);
+        instruction.params ~= fxLabel(name);
+
+        labels ~= FXLabel(name, instructions.length);
     }
 
     /// copy destination, source
@@ -59,7 +75,7 @@ struct FXObject
         {
             case FXBackendType.c:
             {
-                convertIRToC(path, instructions);
+                convertIRToC(path, this);
                 break;
             }
 

@@ -10,7 +10,9 @@ void main()
 {
     FXObject obj;
     
-    // obj.syscall(fxReg(0), fxI32(60), fxI32(0));
+    obj.label("main");
+    obj.ret(fxVoid);
+    obj.label("test");
     obj.ret(fxVoid);
 
     obj.compile(FXTarget(FXBackendType.c, FXOSType.linux), "tests/out/test.c");

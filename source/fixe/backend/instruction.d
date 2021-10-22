@@ -4,14 +4,18 @@ import fixe.backend.value;
 
 enum FXInstructionType
 {
+    label,
+
     copy,
     ret,
 
     syscall,
 }
 
-__gshared string[3] fxInstructionNames = 
+__gshared string[4] fxInstructionNames = 
 [
+    "label",
+
     "copy",
     "ret",
     
