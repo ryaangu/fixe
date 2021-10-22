@@ -9,11 +9,13 @@ import std.stdio;
 void main()
 {
     FXObject obj;
-    
+    FXTarget target = FXTarget(FXBackendType.c, FXOSType.linux);
+
     obj.label("main");
+    obj.label(".end");
     obj.ret(fxVoid);
     obj.label("test");
     obj.ret(fxVoid);
 
-    obj.compile(FXTarget(FXBackendType.c, FXOSType.linux), "tests/out/test.c");
+    obj.compile(target, "tests/out/test.c");
 }

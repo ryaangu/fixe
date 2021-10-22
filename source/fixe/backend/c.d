@@ -85,6 +85,11 @@ private void writeFunctionDeclaration(ref FXInstruction instruction)
         writeOutput("void main()\n{\n");
 }
 
+private void writeLabel(ref FXInstruction instruction)
+{
+    writeOutput("_l", instruction.params[0].label, ":\n");
+}
+
 void convertIRToC(string path, ref FXObject object)
 {
     writeGuardStart("FIXE_OUTPUT");
@@ -109,11 +114,16 @@ void convertIRToC(string path, ref FXObject object)
         {
             case FXInstructionType.label:
             {
-                if (hadLabel)
-                    writeOutput("}\n\n");
-                
-                hadLabel = true;
-                writeFunctionDeclaration(instruction);
+                if (object.findLabel(instruction.params[0].label) == null)
+                    writeLabel(instruction);
+                else
+                {
+                    if (hadLabel)
+                        writeOutput("}\n\n");
+
+                    hadLabel = true;
+                    writeFunctionDeclaration(instruction);
+                }
                 break;
             }
             

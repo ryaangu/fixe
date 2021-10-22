@@ -19,7 +19,9 @@ struct FXObject
     FXInstruction[] instructions;
     FXLabel[] labels;
 
-    private FXInstruction* make_instruction(uint type)
+    private FXLabel *currentLabel;
+
+    private FXInstruction* makeInstruction(uint type)
     {
         FXInstruction instruction;
         instruction.type = type;
@@ -28,13 +30,32 @@ struct FXObject
         return &instructions[$ - 1];
     }
 
+    FXLabel *findLabel(string name)
+    {
+        foreach (ref FXLabel label; labels)
+        {
+            if (label.name == name)
+                return &label;
+        }
+
+        return null;
+    }
+
     /// label name:
     void label(string name)
     {
-        FXInstruction *instruction = make_instruction(FXInstructionType.label);
-        instruction.params ~= fxLabel(name);
+        bool isGlobal = name[0] != '.';
 
-        labels ~= FXLabel(name, instructions.length);
+        if (!isGlobal)
+            name = currentLabel.name ~ "_" ~ name[1 .. name.length];
+        else
+        {
+            labels ~= FXLabel(name, instructions.length);
+            currentLabel = &labels[$ - 1];
+        }
+        
+        FXInstruction *instruction = makeInstruction(FXInstructionType.label);
+        instruction.params ~= fxLabel(name);
     }
 
     /// copy destination, source
@@ -42,7 +63,7 @@ struct FXObject
     {
         static if (params.length == 2)
         {
-            FXInstruction *instruction = make_instruction(FXInstructionType.copy);
+            FXInstruction *instruction = makeInstruction(FXInstructionType.copy);
 
             instruction.params ~= params[0];
             instruction.params ~= params[1];
@@ -54,7 +75,7 @@ struct FXObject
     {
         static if (params.length == 1)
         {
-            FXInstruction *instruction = make_instruction(FXInstructionType.ret);
+            FXInstruction *instruction = makeInstruction(FXInstructionType.ret);
             instruction.params ~= params[0];
         }
     }
@@ -62,7 +83,7 @@ struct FXObject
     /// syscall destination, source...
     void syscall(T...)(T params)
     {
-        FXInstruction *instruction = make_instruction(FXInstructionType.syscall);
+        FXInstruction *instruction = makeInstruction(FXInstructionType.syscall);
         
         foreach (ref FXValue param; params)
             instruction.params ~= param;
