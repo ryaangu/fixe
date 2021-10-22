@@ -3,7 +3,7 @@
 
 ## Intermediate Representation
 #### Backend
-- [ ] Remove global labels, instead use functions.
+- [ ] Add function (global label) parameters.
 
 #### Compiler
 - [ ] Add the scanner  (converts source code into tokens).
