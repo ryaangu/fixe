@@ -1,0 +1,1 @@
+gdc --version=canOptimize source/fixe/*/*.d source/fixe/*.d tests/main.d -O3 -o out/fixe

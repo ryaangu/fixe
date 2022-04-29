@@ -1,1 +1,0 @@
-gdc source/fixe/*/*.d tests/main.d -o out/fixe
